@@ -1,0 +1,28 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  compile-with-bazel:
+    runs-on: [self-hosted, bochen-ci-test]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Test
+      run: |
+           bazel clean --expunge
+           bazel coverage ... --coverage_report_generator="@bazel_tools//tools/test/CoverageOutputGenerator/java/com/google/devtools/coverageoutputgenerator:Main" --combined_report=lcov --nocache_test_results
+    - name: List coverage files
+      run: |
+           ls -l bazel-out/_coverage/
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      with:
+        file: bazel-out/_coverage/coverage.info
