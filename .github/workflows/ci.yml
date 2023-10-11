@@ -25,4 +25,4 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       with:
-        file: bazel-out/_coverage/coverage.info
+        file: bazel-out/_coverage/_coverage_report.dat
