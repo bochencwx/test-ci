@@ -3,6 +3,9 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
   workflow_dispatch:
 permissions:
   contents: read
@@ -16,7 +19,7 @@ jobs:
     - name: Test
       run: |
            bazel clean --expunge
-           bazel coverage ... --coverage_report_generator="@bazel_tools//tools/test/CoverageOutputGenerator/java/com/google/devtools/coverageoutputgenerator:Main" --combined_report=lcov --nocache_test_results
+           bazel coverage ... --test_output=all --coverage_report_generator="@bazel_tools//tools/test/CoverageOutputGenerator/java/com/google/devtools/coverageoutputgenerator:Main" --combined_report=lcov --nocache_test_results
     - name: List coverage files
       run: |
            ls -l bazel-out/_coverage/
