@@ -1,2 +1,6 @@
+[![API](https://img.shields.io/badge/API-latest-green)]()
+[![Docs](https://img.shields.io/badge/docs-latest-green)]()
+[![LICENSE](https://img.shields.io/github/license/bochencwx/test-ci.svg?style=flat-square)](https://github.com/bochencwx/test-ci/blob/main/LICENSE)
+[![Releases](https://img.shields.io/github/release/bochencwx/test-ci.svg?style=flat-square)](https://github.com/bochencwx/test-ci/releases)
 [![Build Status](https://github.com/bochencwx/test-ci/actions/workflows/ci.yml/badge.svg)](https://github.com/bochencwx/test-ci/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/bochencwx/test-ci/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bochencwx/test-ci/tree/main)
