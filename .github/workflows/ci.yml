@@ -10,21 +10,41 @@ permissions:
   contents: read
   pull-requests: read
 jobs:
-  compile-with-bazel:
-    runs-on: [self-hosted, bochen-ci-test]
+  cppcheck:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Test
-      run: |
-           bazel clean --expunge
-           bazel coverage ... --test_output=all --coverage_report_generator="@bazel_tools//tools/test/CoverageOutputGenerator/java/com/google/devtools/coverageoutputgenerator:Main" --combined_report=lcov --nocache_test_results
-    - name: List coverage files
-      run: |
-           ls -l bazel-out/_coverage/
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Run cppcheck
+      uses: deep5050/cppcheck-action@v3.0
       with:
-        file: bazel-out/_coverage/_coverage_report.dat
+        check-command: 'cppcheck --enable=all dir/'
+  # clang-format-check:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2
+  #   - name: Run clang-format
+  #     uses: DoozyX/clang-format-lint-action@v0.12
+  #     with:
+  #       source: 'dir/'
+  #       clangFormatVersion: 11
+  #       style: file
+  # compile-with-bazel:
+  #   runs-on: [self-hosted, bochen-ci-test]
+  #   steps:
+  #   - name: Checkout
+  #     uses: actions/checkout@v3
+  #   - name: Test
+  #     run: |
+  #          bazel clean --expunge
+  #          bazel coverage ... --test_output=all --coverage_report_generator="@bazel_tools//tools/test/CoverageOutputGenerator/java/com/google/devtools/coverageoutputgenerator:Main" --combined_report=lcov --nocache_test_results
+  #   - name: List coverage files
+  #     run: |
+  #          ls -l bazel-out/_coverage/
+  #   - name: Upload coverage reports to Codecov
+  #     uses: codecov/codecov-action@v3
+  #     env:
+  #       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  #     with:
+  #       file: bazel-out/_coverage/_coverage_report.dat
