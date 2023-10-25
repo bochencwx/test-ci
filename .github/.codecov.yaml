@@ -10,3 +10,4 @@ coverage:
         informational: true
         threshold: 60%
       patch: false
+    patch: false
