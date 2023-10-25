@@ -8,5 +8,5 @@ coverage:
     project:
       default:
         informational: true
-        threshold: 1%
+        threshold: 60%
       patch: false
