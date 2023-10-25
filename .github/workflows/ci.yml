@@ -4,21 +4,19 @@ on:
     branches:
       - main
   workflow_dispatch:
-  schedule:
-    - cron: '30 3 * * *'
 permissions:
   contents: read
   pull-requests: read
 jobs:
   compile-with-bazel:
-    runs-on: [self-hosted, bochen-ci-test]
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Test
       run: |
            bazel clean --expunge
-           bazel coverage ... --test_output=all --coverage_report_generator="@bazel_tools//tools/test/CoverageOutputGenerator/java/com/google/devtools/coverageoutputgenerator:Main" --combined_report=lcov --nocache_test_results
+           bazel coverage ... --test_output=errors --coverage_report_generator="@bazel_tools//tools/test/CoverageOutputGenerator/java/com/google/devtools/coverageoutputgenerator:Main" --combined_report=lcov --nocache_test_results
     - name: List coverage files
       run: |
            ls -l bazel-out/_coverage/
